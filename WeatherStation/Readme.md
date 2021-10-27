@@ -4,9 +4,9 @@ Weather station is a small commmand line utility to pull down weather data for a
 
 ## Installation
 
-TBD
-
-Need to include how to provide api key
+- Generate an API key from OpenWeather.org and add it to the App.Config file.
+- Install required dependancies
+- Build and Enjoy
 
 ## Usage
 
@@ -17,9 +17,10 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Please make sure to update tests as appropriate.
 
-## Learning
+## Learned
 
 - API requests from third party
+- JSON formatting
 - Testing
 
 ## License
