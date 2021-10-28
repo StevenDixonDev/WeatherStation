@@ -11,21 +11,41 @@ namespace WeatherStation
     {
         static async Task Main(string[] args)
         {
+            // Place ApiKey in app.config before running
             WeatherApi.Initialize(ConfigurationManager.AppSettings["APIKey"]);
 
             string myCity;
+            WeatherView weatherView = new WeatherView();
 
-            Console.WriteLine("Welcome to weather station, please specify a city to pull the current weather info for!");
-            myCity = Console.ReadLine();
+            bool gatherData = true;
+            string redo;
+            WeatherData weatherData;
 
-            WeatherData t = await WeatherApi.GetWeatherData(myCity);
-
-            var v = t.weather.Select(vp => $"{vp.description}");
-            foreach(var i in v)
+            while (gatherData)
             {
-                Console.WriteLine(i);
+                redo = "";
+                Console.WriteLine(weatherView.GetOpening());
+                myCity = Console.ReadLine();
+
+                weatherData = await WeatherApi.GetWeatherData(myCity);
+
+                if (weatherData is not null)
+                {
+                    Console.Write(weatherView.FormatForecast(weatherData));
+                }
+                else
+                {
+                    gatherData = false;
+                }
+
+                while (redo != "y" && redo != "n") {
+                    Console.WriteLine("Would you like to look up another city? [y/n]");
+                    redo = Console.ReadLine();
+                }
+
+                if (redo == "n") gatherData = false;
             }
-            //Console.WriteLine(t.weather);
+         
         }
     
     }

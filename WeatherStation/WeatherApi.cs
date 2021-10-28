@@ -34,9 +34,18 @@ namespace WeatherStation
             }
             catch (HttpRequestException e)
             {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
-                return new WeatherData();
+                if (e.Message.Contains("404"))
+                {
+                    Console.WriteLine("It looks like that city was not found.");
+                } else if (e.Message.Contains("401"))
+                {
+                    Console.WriteLine("An Error Occured, please check you API key.");
+                } else
+                {
+                    Console.WriteLine("\nException Caught!");
+                    Console.WriteLine("Message :{0} ", e.Message);
+                }
+                return null;
             }
         }
     }
